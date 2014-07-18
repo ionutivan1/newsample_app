@@ -41,6 +41,12 @@ class UsersController < ApplicationController
         # @user.activate!
         redirect_to signin_path
         flash[:success] = "Account confirmed"
+
+      respond_to do |format|
+        UserMailer.welcome_mail(@user).deliver
+        sign_in @user
+        format.html { redirect_to @user }
+        flash[:success] = "Welcome to the Sample App!"
       end
     else
       render 'new'
