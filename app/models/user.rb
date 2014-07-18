@@ -1,4 +1,18 @@
 class User < ActiveRecord::Base
+
+  state_machine :initial => :inactive do
+    state :inactive, value: 0
+    state :active, value: 1
+
+    event :activate do
+    transition :inactive => :active
+    end
+
+    event :inactivate do
+      transition :active => :inactive
+    end
+  end
+
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
