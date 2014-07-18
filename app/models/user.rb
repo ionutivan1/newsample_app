@@ -26,10 +26,11 @@ class User < ActiveRecord::Base
 
    def feed
     Micropost.from_users_followed_by(self)
-  end
+   end
+
     def following?(other_user)
     relationships.find_by(followed_id: other_user.id)
-  end
+    end
 
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)

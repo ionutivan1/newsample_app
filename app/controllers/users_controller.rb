@@ -20,9 +20,13 @@ before_action :signed_in_user,
   def create
     @user = User.new(user_params)
     if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+
+      respond_to do |format|
+        UserMailer.welcome_mail(@user).deliver
+        sign_in @user
+        format.html { redirect_to @user }
+        flash[:success] = "Welcome to the Sample App!"
+      end
     else
       render 'new'
     end
@@ -65,7 +69,7 @@ before_action :signed_in_user,
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :notification)
   end
 
   # Before filters
