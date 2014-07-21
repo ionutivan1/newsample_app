@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
   state_machine :initial => :inactive do
-    state :inactive, value: 0
-    state :active, value: 1
+    state :inactive, value: false
+    state :active, value: true
 
     event :activate do
     transition :inactive => :active
@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64
+  end
+
+  def sign_up_token
+    return User.new_remember_token
   end
 
   def User.digest(token)

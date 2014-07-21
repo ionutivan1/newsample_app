@@ -14,3 +14,9 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+.gitignore~
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/runConfigurations/
+

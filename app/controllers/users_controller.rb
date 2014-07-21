@@ -21,17 +21,33 @@ before_action :signed_in_user,
     @user = User.new(user_params)
 
       respond_to do |format|
-        if @user.save
-        UserMailer.welcome_mail(@user).deliver
-        # sign_in @user
 
-        format.html { redirect_to @user }
-        flash[:success] = "Welcome to the Sample App!"
+        if @user.save
+          @user.update_attribute(:confirmation, @user.sign_up_token)
+        UserMailer.welcome_mail(@user).deliver
+
+        format.html { redirect_to root_url }
+        flash[:success] = "Check email for confirmation link"
         else
           render 'new'
         end
       end
 
+  end
+
+  def set_complete
+    @user = User.find(params[:id])
+    confirm = params[:confirmation]
+    if @user.can_activate?
+      if @user.confirmation == confirm
+      @user.update_attribute(:state, true)
+
+      redirect_to signin_path
+      flash[:success] = "Account confirmed"
+      end
+    else
+      render 'new'
+    end
   end
 
   def destroy

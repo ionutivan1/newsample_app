@@ -12,7 +12,9 @@ def make_users
                        email:    "iivan@pitechnologies.ro",
                        password: "asdasd",
                        password_confirmation: "asdasd",
-                       admin: true)
+                       admin: true,
+                      notification: true,
+                      state: true)
   99.times do |n|
     name  = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
@@ -20,7 +22,8 @@ def make_users
     User.create!(name:     name,
                  email:    email,
                  password: password,
-                 password_confirmation: password)
+                 password_confirmation: password,
+                 state: true)
   end
 end
 
