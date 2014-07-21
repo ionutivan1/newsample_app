@@ -5,8 +5,8 @@ SampleApp::Application.routes.draw do
       get :following, :followers
       get :set_complete
       get :notifications
+      get 'set_complete/:confirmation' => :set_complete
     end
-
   end
     resources :sessions,      only: [:new, :create, :destroy]
   resources :messages,    only: [ :index, :new, :show, :create, :destroy]
