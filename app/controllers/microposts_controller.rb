@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
 
   def index
     # @user = User.find(params[:id])
-    # @microposts = @user.microposts
+     @microposts = Micropost.all
   end
 
   def create
