@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
-  default_url_options :host => "localhost:3000"
+  get "password_resets/new"
+  # default_url_options :host => "localhost:3000"
   resources :users do
     member do
       get :following, :followers
@@ -10,6 +11,8 @@ SampleApp::Application.routes.draw do
     resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :password_resets
+
   root  'static_pages#home'
 
   match '/signup',  to: 'users#new',            via: 'get'

@@ -87,7 +87,7 @@ before_action :signed_in_user,
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :notification)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :notification, :password_reset_token)
   end
 
   # Before filters
