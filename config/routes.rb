@@ -1,7 +1,7 @@
 SampleApp::Application.routes.draw do
 default_url_options :host => "localhost:3000"
 
-  namespace :api, :defaults => { :format => 'xml' } do
+  namespace :api, :defaults => { :format => 'json' } do
     namespace :v1 do
     resources :users
       end
