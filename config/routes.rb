@@ -1,5 +1,12 @@
 SampleApp::Application.routes.draw do
-  default_url_options  :host => 'localhost:3000'
+default_url_options :host => "localhost:3000"
+
+  namespace :api, :defaults => { :format => 'xml' } do
+    namespace :v1 do
+    resources :users
+      end
+  end
+
   resources :users do
     member do
       get :following, :followers
