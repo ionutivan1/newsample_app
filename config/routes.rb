@@ -1,6 +1,6 @@
 SampleApp::Application.routes.draw do
 
-  namespace :api, :defaults => { :format => 'json' } do
+  namespace :api, :defaults => { :format => 'xml' } do
     namespace :v1 do
     resources :users
       end
