@@ -1,11 +1,12 @@
 module Api
   module V1
 class UsersController < ApplicationController
-
+require 'nokogiri'
+require 'open-uri'
   http_basic_authenticate_with :name => "exampleadmin@railstutorial.org",
                                :password => "asdasd"
   before_filter :fetch_user, :except => [:index, :create]
-  respond_to :json
+  respond_to :xml
   def fetch_user
     @user = User.find_by_id(params[:id])
   end
@@ -27,7 +28,24 @@ class UsersController < ApplicationController
   end
 
   def create
-    respond_with User.create(user_params)
+    #ciobaneala
+    doc = Nokogiri::XML.parse(request.body.read)
+    name_with_tags = doc.xpath("//name").to_s
+    name =name_with_tags.match ("(?<=\<name\>).*?(?=\<\/name\>)")
+    email_with_tags = doc.xpath("//email").to_s
+    email =email_with_tags.match ("(?<=\<email\>).*?(?=\<\/email\>)")
+    password_with_tags = doc.xpath("//password").to_s
+    password =password_with_tags.match ("(?<=\<password\>).*?(?=\<\/password\>)")
+    password_confirmation_with_tags = doc.xpath("//password_confirmation").to_s
+    password_confirmation =password_confirmation_with_tags.match ("(?<=\<password_confirmation\>).*?(?=\<\/password_confirmation\>)")
+
+    @user = User.new
+    @user.name = name
+    @user.email = email
+    @user.password = password
+    @user.password_confirmation = password_confirmation
+    @user.save
+
   end
 
   def edit
