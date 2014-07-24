@@ -5,7 +5,11 @@ class MicropostsController < ApplicationController
 
   def index
     if params[:search]
-    @microposts = Micropost.search(params[:search]).order(params[:direction]).paginate(page: params[:page])
+      if params[:direction]
+          @microposts = Micropost.search(params[:search]).order("microposts.created_at DESC").paginate(page: params[:page])
+      else
+        @microposts = Micropost.search(params[:search]).paginate(page: params[:page])
+      end
     end
   end
 
