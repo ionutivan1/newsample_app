@@ -6,6 +6,11 @@ before_action :signed_in_user,
 
   def index
     @users = User.paginate(page: params[:page])
+    if params[:search]
+      @users = User.search(params[:search]).paginate(page: params[:page])
+    else
+      @users = User.paginate(page: params[:page])
+    end
   end
 
   def new

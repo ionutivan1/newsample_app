@@ -38,6 +38,17 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id).destroy
   end
 
+  def self.search(search)
+    if search
+      #old way, still functional
+      # find(:all, :conditions => ['name LIKE ?',"%#{search}%"])
+
+      where('name LIKE?',"%#{search}%")
+    else
+      scoped
+      # find(:all)
+    end
+  end
   private
 
   def create_remember_token
