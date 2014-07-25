@@ -30,22 +30,18 @@ require 'open-uri'
   def create
     #ciobaneala
     doc = Nokogiri::XML.parse(request.body.read)
-    name_with_tags = doc.xpath("//name").to_s
-    name =name_with_tags.match ("(?<=\<name\>).*?(?=\<\/name\>)")
-    email_with_tags = doc.xpath("//email").to_s
-    email =email_with_tags.match ("(?<=\<email\>).*?(?=\<\/email\>)")
-    password_with_tags = doc.xpath("//password").to_s
-    password =password_with_tags.match ("(?<=\<password\>).*?(?=\<\/password\>)")
-    password_confirmation_with_tags = doc.xpath("//password_confirmation").to_s
-    password_confirmation =password_confirmation_with_tags.match ("(?<=\<password_confirmation\>).*?(?=\<\/password_confirmation\>)")
+    name = doc.xpath("//name/text()")
+    email = doc.xpath("//email/text()")
+    password = doc.xpath("//password/text()")
+    password_confirmation = doc.xpath("//password_confirmation/text()")
 
     @user = User.new
-    @user.name = name
-    @user.email = email
-    @user.password = password
-    @user.password_confirmation = password_confirmation
-    @user.save
-
+    @user.name = name.to_s
+    @user.email = email.to_s
+    @user.password = password.to_s
+    @user.password_confirmation = password_confirmation.to_s
+    render :xml => @user
+    #respond_with?
   end
 
   def edit
