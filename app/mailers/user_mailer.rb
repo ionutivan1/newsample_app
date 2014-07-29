@@ -3,8 +3,6 @@ class UserMailer < ActionMailer::Base
 
   def welcome_mail(user)
     @user = user
-    @url = users_url+"/#{user.id}/set_complete/#{user.confirmation}"
-
     mail(to: @user.email, subject: "welcome to railstutorial.org")
   end
 

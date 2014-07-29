@@ -3,7 +3,7 @@ SampleApp::Application.routes.draw do
   resources :users do
     member do
       get :following, :followers
-      get 'set_complete/:confirmation' => :set_complete
+      get :set_complete
     end
 
   end

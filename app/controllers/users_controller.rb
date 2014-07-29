@@ -4,6 +4,7 @@ before_action :signed_in_user,
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
+before_action :find_user
   def index
     @users = User.paginate(page: params[:page])
   end
@@ -13,35 +14,31 @@ before_action :signed_in_user,
   end
 
   def show
-    @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def create
     @user = User.new(user_params)
 
-      respond_to do |format|
-
+        @user.confirmation = @user.sign_up_token
         if @user.save
-          @user.update_attribute(:confirmation, @user.sign_up_token)
         UserMailer.welcome_mail(@user).deliver
-
-        format.html { redirect_to root_url }
-        flash[:success] = "Check email for confirmation link"
-        else
-          render 'new'
+        respond_to do |format|
+          format.html { redirect_to root_url }
+          format.js
+          flash[:success] = "Check email for confirmation link"
         end
-      end
+          else
+            render 'new'
+          end
 
   end
 
   def set_complete
-    @user = User.find(params[:id])
-    confirm = params[:confirmation]
     if @user.can_activate?
-      if @user.confirmation == confirm
+      if @user.confirmation == params[:confirmation]
       @user.update_attribute(:state, true)
-
+      # @user.activate
       redirect_to signin_path
       flash[:success] = "Account confirmed"
       end
@@ -51,17 +48,15 @@ before_action :signed_in_user,
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     flash[:success] = "User deleted."
     redirect_to users_url
   end
 
   def edit
-    # @user = User.find(params[:id])
   end
 
   def update
-    # @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -72,14 +67,12 @@ before_action :signed_in_user,
 
   def following
     @title = "Following"
-    @user = User.find(params[:id])
     @users = @user.followed_users.paginate(page: params[:page])
     render 'show_follow'
   end
 
     def followers
     @title = "Followers"
-    @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
   end
@@ -106,5 +99,13 @@ before_action :signed_in_user,
 
   def admin_user
     redirect_to(root_url) unless current_user.admin?
+  end
+
+  def find_user
+    if params[:id]
+    @user = User.find(params[:id])
+    else
+      @user = User.new
+    end
   end
 end
