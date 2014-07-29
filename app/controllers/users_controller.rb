@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
   before_action :find_user, only: [:update, :set_complete, :destroy, :following, :followers]
 
+before_action :find_user
   def index
     @search_query = UserSearchService.new(params[:search])
     @users = @search_query.find_users.paginate(page: params[:page])
@@ -42,34 +43,41 @@ class UsersController < ApplicationController
         redirect_to signin_path
         flash[:success] = "Account confirmed"
 
+<<<<<<< HEAD
       respond_to do |format|
         UserMailer.welcome_mail(@user).deliver
         sign_in @user
         format.html { redirect_to @user }
         flash[:success] = "Welcome to the Sample App!"
 
+=======
+        @user.confirmation = @user.sign_up_token
+>>>>>>> Finished modifications to signup confirmation
         if @user.save
-          @user.update_attribute(:confirmation, @user.sign_up_token)
         UserMailer.welcome_mail(@user).deliver
-
-        format.html { redirect_to root_url }
-        flash[:success] = "Check email for confirmation link"
-        else
-          render 'new'
+        respond_to do |format|
+          format.html { redirect_to root_url }
+          format.js
+          flash[:success] = "Check email for confirmation link"
         end
+<<<<<<< HEAD
       end
     else
       render 'new'
     end
+=======
+          else
+            render 'new'
+          end
+
+>>>>>>> Finished modifications to signup confirmation
   end
 
   def set_complete
-    @user = User.find(params[:id])
-    confirm = params[:confirmation]
     if @user.can_activate?
-      if @user.confirmation == confirm
+      if @user.confirmation == params[:confirmation]
       @user.update_attribute(:state, true)
-
+      # @user.activate
       redirect_to signin_path
       flash[:success] = "Account confirmed"
       end
@@ -98,16 +106,26 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
+<<<<<<< HEAD
     followers_or_following(params[:id], params[:page])
+=======
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+>>>>>>> Finished modifications to signup confirmation
   end
 
   def followers
     @title = "Followers"
+<<<<<<< HEAD
     followers_or_following(params[:id], params[:page])
   end
 
   def notifications
    render 'notifications'
+=======
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+>>>>>>> Finished modifications to signup confirmation
   end
 
   private
@@ -136,6 +154,7 @@ class UsersController < ApplicationController
 
   def find_user
     if params[:id]
+<<<<<<< HEAD
       @user = User.find_by_id(params[:id])
       if @user.blank?
         redirect_to signin_url, notice: "Bad url."
@@ -148,4 +167,11 @@ class UsersController < ApplicationController
     @users = @user.followed_users.paginate(page: page)
     render 'show_follow'
   end
+=======
+    @user = User.find(params[:id])
+    else
+      @user = User.new
+    end
+  end
+>>>>>>> Finished modifications to signup confirmation
 end
