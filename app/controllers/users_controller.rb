@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-before_action :signed_in_user,
+  before_action :signed_in_user,
                 only: [:index, :edit, :update, :destroy, :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
+  before_action :find_user, only: [ :update, :set_complete, :destroy, :following, :followers ]
 
-before_action :find_user
   def index
     @users = User.paginate(page: params[:page])
   end
@@ -19,28 +19,27 @@ before_action :find_user
 
   def create
     @user = User.new(user_params)
-
-        @user.confirmation = @user.sign_up_token
-        if @user.save
-        UserMailer.welcome_mail(@user).deliver
-        respond_to do |format|
-          format.html { redirect_to root_url }
-          format.js
-          flash[:success] = "Check email for confirmation link"
-        end
-          else
-            render 'new'
-          end
+    @user.confirmation = @user.sign_up_token
+    if @user.save
+      UserMailer.welcome_mail(@user).deliver
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.js
+        flash[:success] = "Check email for confirmation link"
+      end
+    else
+      render 'new'
+    end
 
   end
 
   def set_complete
     if @user.can_activate?
       if @user.confirmation == params[:confirmation]
-      @user.update_attribute(:state, true)
-      # @user.activate
-      redirect_to signin_path
-      flash[:success] = "Account confirmed"
+        @user.update_attribute(:state, true)
+        # @user.activate!
+        redirect_to signin_path
+        flash[:success] = "Account confirmed"
       end
     else
       render 'new'
@@ -71,7 +70,7 @@ before_action :find_user
     render 'show_follow'
   end
 
-    def followers
+  def followers
     @title = "Followers"
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
@@ -103,7 +102,7 @@ before_action :find_user
 
   def find_user
     if params[:id]
-    @user = User.find(params[:id])
+      @user = User.find(params[:id])
     else
       @user = User.new
     end
