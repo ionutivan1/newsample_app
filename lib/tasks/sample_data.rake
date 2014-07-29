@@ -35,11 +35,21 @@ def make_microposts
   end
 end
 
+def make_messages
+  users = User.all(limit: 6)
+  user  = users.first
+  50.times do
+    user_id = users[3..40]
+    content = "d " + Faker::Lorem.sentence(5)
+    user.each { |user| user.messages.create(content: content) }
+  end
+end
+
 def make_relationships
   users = User.all
   user  = users.first
   followed_users = users[2..50]
   followers      = users[3..40]
-  followed_users.each { |followed| user.follow!(followed) }
-  followers.each      { |follower| follower.follow!(user) }
+  followed_users.each { |followed| user.follow(followed) }
+  followers.each      { |follower| follower.follow(user) }
 end

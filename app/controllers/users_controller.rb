@@ -66,14 +66,12 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    @users = @user.followed_users.paginate(page: params[:page])
-    render 'show_follow'
+    followers_or_following(params[:id], params[:page])
   end
 
   def followers
     @title = "Followers"
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    followers_or_following(params[:id], params[:page])
   end
 
   private
@@ -107,5 +105,11 @@ class UsersController < ApplicationController
         redirect_to signin_url, notice: "Bad url."
       end
     end
+  end
+  
+  def followers_or_following(user_id, page)
+    @user = User.find(user_id)
+    @users = @user.followed_users.paginate(page: page)
+    render 'show_follow'
   end
 end
