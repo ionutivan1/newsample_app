@@ -20,10 +20,8 @@ before_action :signed_in_user,
   def create
     @user = User.new(user_params)
     if @user.save
-
+      UserMailer.welcome_mail(@user).deliver
       respond_to do |format|
-        UserMailer.welcome_mail(@user).deliver
-        sign_in @user
         format.html { redirect_to @user }
         flash[:success] = "Welcome to the Sample App!"
       end
