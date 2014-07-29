@@ -1,5 +1,4 @@
 SampleApp::Application.routes.draw do
-  get "password_resets/new"
   # default_url_options :host => "localhost:3000"
   resources :users do
     member do

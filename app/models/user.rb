@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   def send_password_reset
     self.update_attribute(:password_reset_token, sign_up_token)
     self.update_attribute(:password_reset_sent_at, Time.zone.now)
-    UserMailer.password_reset(self).deliver
+
   end
 
   private
