@@ -8,7 +8,7 @@ module SessionsHelper
   end
 
   def signed_in?
-    !current_user.nil?
+    !current_user.blank?
   end
 
 
@@ -39,8 +39,8 @@ module SessionsHelper
     self.current_user = nil
   end
 
-  def redirect_back_or(default)
-    redirect_to(session[:return_to] || default)
+  def redirect_back_or
+    redirect_to(session[:return_to] || root_path)
     session.delete(:return_to)
   end
 

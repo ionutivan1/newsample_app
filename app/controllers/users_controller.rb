@@ -50,16 +50,12 @@ before_action :signed_in_user,
 
   def following
     @title = "Following"
-    @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
-    render 'show_follow'
+    followers_or_following(params[:id], params[:page])
   end
 
-    def followers
+  def followers
     @title = "Followers"
-    @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    followers_or_following(params[:id], params[:page])
   end
 
   private
@@ -84,5 +80,11 @@ before_action :signed_in_user,
 
   def admin_user
     redirect_to(root_url) unless current_user.admin?
+  end
+
+  def followers_or_following(user_id, page)
+    @user = User.find(user_id)
+    @users = @user.followed_users.paginate(page: page)
+    render 'show_follow'
   end
 end
