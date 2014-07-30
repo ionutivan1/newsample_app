@@ -5,7 +5,7 @@ class PasswordResetsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:email])
-    user.send_password_reset if user
+    user.send_password_reset
     if UserMailer.password_reset(user).deliver
     flash[:success] = "Email sent with password reset instructions"
     else
@@ -15,7 +15,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by_password_reset_token!(params[:id])
+    binding.pry
+    @user = User.find_by_password_reset_token(params[:id])
   end
 
   def update
