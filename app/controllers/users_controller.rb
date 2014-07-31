@@ -3,7 +3,7 @@ class UsersController < ApplicationController
                 only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-  before_action :find_user, only: [ :update, :set_complete, :destroy, :following, :followers ]
+  before_action :find_user, only: [:update, :set_complete, :destroy, :following, :followers]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -102,9 +102,10 @@ class UsersController < ApplicationController
 
   def find_user
     if params[:id]
-      @user = User.find(params[:id])
-    else
-      @user = User.new
+      @user = User.find_by_id(params[:id])
+      if @user.blank?
+        redirect_to signin_url, notice: "Bad url."
+      end
     end
   end
 end
