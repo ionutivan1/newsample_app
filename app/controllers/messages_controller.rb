@@ -15,12 +15,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @receiver = User.find_by_email(params[:message][:user_id])
     @message = Message.new(message_params)
     @message.sender_id = current_user.id
-    @message.user_id = @receiver.id
+    @message.user_id = User.find_by_email(params[:message][:user_id]).id
     if @message.save
-
       flash[:success] = "Message sent!"
       redirect_to message_url(current_user)
     else
