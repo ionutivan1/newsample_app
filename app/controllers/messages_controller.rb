@@ -1,9 +1,12 @@
 class MessagesController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :signed_in_user, only: [:new, :create, :destroy]
 
   def index
 
+  end
+
+  def new
+    @message = Message.new
   end
 
   def show
@@ -12,16 +15,29 @@ class MessagesController < ApplicationController
   end
 
   def create
+    @receiver = User.find_by_email(params[:message][:user_id])
+    @message = Message.new(message_params)
+    @message.sender_id = current_user.id
+    @message.user_id = @receiver.id
     if @message.save
-        #un something
+
+      flash[:success] = "Message sent!"
+      redirect_to message_url(current_user)
     else
-      # render 'static_pages/home'
+      render 'messages/show'
     end
   end
 
   def destroy
+    @message = Message.find(params[:id])
     @message.destroy
-    redirect_to root_url
+    redirect_to message_url(current_user)
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:user_id, :content, :sender_id)
   end
 
 end

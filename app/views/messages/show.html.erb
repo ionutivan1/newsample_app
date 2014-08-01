@@ -10,6 +10,9 @@
     <section>
       <%= render 'shared/stats' %>
     </section>
+    <section>
+      <%= render 'messages/message_form' %>
+    </section>
   </aside>
   <div class="span8">
     <% if @user.messages.any? %>
