@@ -15,23 +15,21 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
-    @message.sender_id = current_user.id
-    if params[:message][:user_id].blank?
-      flash[:notice] = "Can't send it to no one! Input an email address please."
+    email = params[:message][:user_id]
+    content = params[:message][:content]
+
+    if email.blank? ||content.blank?
+      flash[:notice] = "Fields are empty. Please fill them"
       redirect_to message_url(current_user) and return
     else
-      @message.user_id = User.find_by_email(params[:message][:user_id]).id
-    end
-    if params[:message][:content].blank?
-      flash[:notice] = "Content cannot be empty."
-      redirect_to message_url(current_user) and return
-    end
-    if @message.save
-      flash[:success] = "Message sent!"
-      redirect_to message_url(current_user)
-    else
-      render 'messages/show'
+      @message.sender_id = current_user.id
+      @message.user_id = User.find_by_email(email).id
+      if @message.save
+        flash[:success] = "Message sent!"
+        redirect_to message_url(current_user)
+      else
+        render 'messages/show'
+      end
     end
   end
 
