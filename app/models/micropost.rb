@@ -1,7 +1,8 @@
 class Micropost < ActiveRecord::Base
   belongs_to :user
   default_scope -> { order('created_at DESC') }
-  validates :content, presence: true, length: { maximum: 140 }
+  scope :content, -> (search) { where(' content LIKE ? ', "%#{search}%") }
+  validates :content, presence: true, length: {maximum: 140}
   validates :user_id, presence: true
 
   # Returns microposts from the users being followed by the given user.
@@ -12,11 +13,4 @@ class Micropost < ActiveRecord::Base
           user_id: user.id)
   end
 
-  def self.search(search)
-    if search
-      where('content LIKE?',"%#{search}%")
-    else
-      scoped
-    end
-  end
 end
