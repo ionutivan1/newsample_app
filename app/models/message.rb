@@ -5,10 +5,4 @@ class Message < ActiveRecord::Base
   validates :user_id, presence: true
   validates :sender_id, presence: true
 
-  # def self.get_receiver(user)
-  #   receiver_id = "SELECT receiver FROM messages
-  #                        WHERE receiver = :user_id"
-  #   where("user_id IN (#{receiver_id}) OR user_id = :user_id",
-  #         user_id: user.id)
-  # end
 end
