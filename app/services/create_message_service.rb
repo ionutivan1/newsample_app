@@ -4,14 +4,18 @@ class CreateMessageService
   end
 
   def validate_params(params)
-    @message = Message.new
-    if params[:user_id].blank?
-        @message.errors.add (:user_id)
+    if params[:user_id].blank? || params[:content].blank?
+      return false
     else
-      @message.user_id = params[:user_id]
+      return true
     end
-    if params[:content].blank?
-      @message.errors.add (:content)
-    end
+  end
+
+  def new_message(params, current_user_id)
+    @message = Message.new
+    @message.sender_id = current_user_id
+    @message.user_id = User.find_by_email(params[:user_id]).id
+    @message.content = params[:content]
+    return @message
   end
 end
