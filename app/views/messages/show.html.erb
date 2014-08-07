@@ -3,8 +3,8 @@
   <aside class="span4">
     <section>
       <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
+        <%= gravatar_for current_user %>
+        <%= current_user.name %>
       </h1>
     </section>
     <section>
@@ -15,8 +15,8 @@
     </section>
   </aside>
   <div class="span8">
-    <% if @user.messages.any? %>
-        <h3>Messages (<%= @user.messages.count %>)</h3>
+    <% if current_user.messages.any? %>
+        <h3>Messages (<%= current_user.messages.count %>)</h3>
         <ol class="microposts">
           <%= render @messages %>
         </ol>

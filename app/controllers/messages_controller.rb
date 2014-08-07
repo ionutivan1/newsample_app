@@ -10,31 +10,23 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @messages = @user.messages.paginate(page: params[:page])
+    @messages = current_user.messages.paginate(page: params[:page])
   end
 
   def create
     @message_service = CreateMessageService.new
-    @message_service.validate_params(params[:message])
-
-    # email = params[:message][:user_id]
-    # content = params[:message][:content]
-    #
-    # if email.blank? ||content.blank?
-    #   flash[:notice] = "Fields are empty. Please fill them"
-    #   redirect_to message_url(current_user) and return
-    # else
-    # @message = Message.create(message_params)
-    #   @message.sender_id = current_user.id
-    #   @message.user_id = User.find_by_email(email).id
-      if @message.save
-        flash[:success] = "Message sent!"
-        redirect_to message_url(current_user)
-      else
-        render 'messages/show'
-      end
-    # end
+    if @message_service.validate_params(params[:message])
+      @message = @message_service.new_message(params[:message], current_user.id)
+    else
+      flash[:notice] = "Fields are empty. Please fill them"
+      redirect_to message_url(current_user) and return
+    end
+    if @message.save
+      flash[:success] = "Message sent!"
+      redirect_to message_url(current_user)
+    else
+      render 'messages/show'
+    end
   end
 
   def destroy
