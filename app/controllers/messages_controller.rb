@@ -14,19 +14,13 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message_service = CreateMessageService.new
-    if @message_service.validate_params(params[:message])
-      @message = @message_service.new_message(params[:message], current_user.id)
-    else
-      flash[:notice] = "Fields are empty. Please fill them"
-      redirect_to message_url(current_user) and return
-    end
-    if @message.save
+    @service = MessageService::CreateMessageService.new(params[:message])
+    if @service.save_message(current_user.id)
       flash[:success] = "Message sent!"
-      redirect_to message_url(current_user)
     else
-      render 'messages/show'
+      flash[:notice] = "There were issues"
     end
+    redirect_to message_url(current_user)
   end
 
   def destroy
