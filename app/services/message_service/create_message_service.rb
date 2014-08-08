@@ -1,39 +1,36 @@
 module MessageService
   class CreateMessageService
 
-    def initialize(params)
-      #initialize nu returneaza ever
+    def initialize(params, receiver_id)
       @user_id = params[:user_id]
       @content = params[:content]
+      @receiver_id = receiver_id
     end
 
-    def save_message(current_user_id)
-      if self.validate_params(@user_id, @content)
-        result = self.new_message(@user_id, @content, current_user_id)
-        return result
-      end
+    def save_message
+      return new_message
     end
 
-    def validate_params(user_id, content)
-      if user_id.blank? || content.blank?
-        return false
-      else
-        return true
-      end
-    end
+    private
 
-    def new_message(user_id, content, current_user_id)
+    def new_message
       @message = Message.new
-      @message.sender_id = current_user_id
-      @message.user_id = User.find_by_email(user_id).id
-      @message.content = content
+      @message.sender_id = @receiver_id
+      @message.content = @content
+      @message.user_id = get_user
       if @message.valid?
-        @message.save
-        return true
+        return @message.save
       else
-        return false
+        return @message.errors.full_messages
       end
     end
 
+    def get_user
+      if User.find_by_email(@user_id).blank?
+        return nil
+      else
+        return User.find_by_email(@user_id).id
+      end
+    end
   end
 end

@@ -14,11 +14,14 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @service = MessageService::CreateMessageService.new(params[:message])
-    if @service.save_message(current_user.id)
+    @service = MessageService::CreateMessageService.new(params[:message], current_user.id)
+    result = @service.save_message
+    if result.nil?
       flash[:success] = "Message sent!"
     else
-      flash[:notice] = "There were issues"
+      result.each do |msg|
+        flash[:notice] = msg
+      end
     end
     redirect_to message_url(current_user)
   end
