@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
 
   def create
     @service = MessageService::CreateMessageService.new(params[:message], current_user.id)
-    if @service.save_message
+    if @service.create_message
       flash[:success] = "Message sent!"
     else
       flash[:error] = @service.get_errors
