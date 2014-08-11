@@ -8,13 +8,7 @@ module MessageService
     end
 
     def save_message
-      new_message
-        if @message.valid?
-          @message.save
-          return true
-        else
-          return false
-        end
+      return new_message
     end
 
     def get_errors
@@ -28,7 +22,12 @@ module MessageService
       @message.sender_id = @receiver_id
       @message.content = @content
       @message.user_id = get_user
-      return @message
+      if @message.valid?
+        @message.save
+        return true
+      else
+        return false
+      end
     end
 
     def get_user
