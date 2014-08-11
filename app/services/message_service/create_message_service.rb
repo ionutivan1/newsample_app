@@ -19,7 +19,8 @@ module MessageService
       @message.content = @content
       @message.user_id = get_user
       if @message.valid?
-        return @message.save
+        @message.save
+        return nil
       else
         return @message.errors.full_messages
       end
