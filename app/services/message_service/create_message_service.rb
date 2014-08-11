@@ -1,18 +1,6 @@
 module MessageService
   class CreateMessageService
 
-    # include ActiveModel::Validations
-
-    #could have validations like this
-    # attr_accessor :user_id, :content
-    #
-    # validates_presence_of :user_id, on: :new_message, message: "No email here"
-    # validates_presence_of :content, on: :new_message, message: "No content here"
-
-    #or like this
-    # validate :message_validator, on: :new_message
-
-
     def initialize(params, receiver_id)
       @user_id = params[:user_id]
       @content = params[:content]
@@ -20,8 +8,8 @@ module MessageService
     end
 
     def create_message
-      new_message
-      save_if_valid
+      build_message
+      save
     end
 
     def get_errors
@@ -30,20 +18,14 @@ module MessageService
 
     private
 
-    def new_message
-      @message = Message.new
-      @message.sender_id = @receiver_id
-      @message.content = @content
-      @message.user_id = get_user
+    def build_message
+      @message = Message.new(sender_id: @receiver_id, content: @content, user_id: get_user)
     end
 
-    def save_if_valid
+    def save
 
       if @message.valid?
         @message.save
-        return true
-      else
-        return false
       end
     end
 
@@ -55,15 +37,5 @@ module MessageService
       end
     end
 
-    # def message_validator
-    #   call validator class from here
-    #   validates_with MessageService::MyValidator
-    # end
   end
-  # class MyValidator
-  #   do validations here
-  #   include ActiveModel::Validations
-  # validates_presence_of :user_id, on: :new_message, message: "No email here"
-  # validates_presence_of :content, on: :new_message, message: "No content here"
-  # end
 end
