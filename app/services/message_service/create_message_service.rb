@@ -30,11 +30,7 @@ module MessageService
     end
 
     def get_user
-      if User.find_by_email(@user_id).blank?
-        return nil
-      else
-        return User.find_by_email(@user_id).id
-      end
+      User.find_by_email(@user_id).try(:id)
     end
 
   end
