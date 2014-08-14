@@ -1,11 +1,11 @@
 class UserSearchService
 
-  def initialize
-
+  def initialize(search)
+    @search = search
   end
 
-  def find(search)
-    @users = User.all.where("name like ?", "%#{search}%")
+  def find
+    @users = User.all.where("name like ?", "%#{@search}%")
     return @users
   end
 
