@@ -7,11 +7,7 @@ class UsersController < ApplicationController
 
   def index
     @search_query = UserSearchService.new(params[:search])
-    if params[:search]
-      @users = @search_query.find.paginate(page: params[:page])
-    else
-      @users = User.paginate(page: params[:page])
-    end
+    @users = @search_query.find_users.paginate(page: params[:page])
   end
 
   def new

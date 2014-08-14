@@ -4,12 +4,16 @@ class UserSearchService
     @search = search
   end
 
-  def find
+  def find_users
+    get_users
+  end
+
+
+    private
+
+    def get_users
     @users = User.all.where("name like ?", "%#{@search}%")
     return @users
   end
 
-  def set_direction(users)
-
-  end
-end
+ end
