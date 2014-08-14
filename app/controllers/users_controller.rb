@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:update, :set_complete, :destroy, :following, :followers]
 
   def index
-    @search_query = UserSearchService.new
+    @search_query = UserSearchService.new(params[:search])
     if params[:search]
-      @users = @search_query.find(params[:search]).paginate(page: params[:page])
+      @users = @search_query.find.paginate(page: params[:page])
     else
       @users = User.paginate(page: params[:page])
     end

@@ -1,11 +1,11 @@
 class MicropostSearchService
 
-  def initialize
-
+  def initialize(search)
+    @search = search
   end
 
-  def find(search)
-    @results = Micropost.content(search)
+  def find
+    @results = Micropost.content(@search)
   end
 
 
