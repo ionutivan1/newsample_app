@@ -5,9 +5,13 @@ class MicropostSearchService
   end
 
   def find
-    @results = Micropost.content(@search)
+    get_microposts
   end
 
-
+  private
+  def get_microposts
+    @microposts = Micropost.all.where("content like ?", "%#{@search}%")
+    return @microposts
+  end
 
 end

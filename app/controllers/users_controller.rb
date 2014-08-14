@@ -1,16 +1,12 @@
 class UsersController < ApplicationController
-before_action :signed_in_user,
+  before_action :signed_in_user,
                 only: [:index, :edit, :update, :destroy, :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
 
   def index
     @search_query = UserSearchService.new(params[:search])
-    if params[:search]
-      @users = @search_query.find.paginate(page: params[:page])
-    else
-      @users = User.paginate(page: params[:page])
-    end
+    @users = @search_query.find_users.paginate(page: params[:page])
   end
 
   def new
@@ -60,7 +56,7 @@ before_action :signed_in_user,
     render 'show_follow'
   end
 
-    def followers
+  def followers
     @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
