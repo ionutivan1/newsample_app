@@ -1,17 +1,27 @@
 require 'spec_helper'
 
 describe MessageService do
-  let (:service) { MessageService::CreateMessageService.new({"user_id" => "", "content" => ""}, 1) }
-  let (:valid_service) { MessageService::CreateMessageService.new({"user_id" => "exampleadmin@railstutorial.org", "content" => "asd"}, 1) }
-  it "returns false" do
-    service.stub(:message) { false }
-    service.message.should eq(false)
-  end
-  it "returns true" do
-    valid_service.stub(:message) { true }
-    valid_service.message.should eq(true)
+
+  let(:user) { FactoryGirl.create(:user, email: "exampleadmin@railstutorial.org") }
+  describe "with valid params" do
+
+    it "creates and saves message" do
+      valid_params = {user_id: user.email, content: "blabla"}
+      service = MessageService::CreateMessageService.new(valid_params, 1)
+      expect { service.create_message }.to change(Message, :count).by(1)
+      # expect(service.create_message).to be(true)
+    end
   end
 
+  describe "with invalid params" do
 
+    it "does not create and save message" do
+      invalid_params = {user_id: "", content: ""}
+      service = MessageService::CreateMessageService.new(invalid_params, 1)
+      service.create_message
+      # expect(service.get_errors).not_to eq(nil)
+      expect { service.create_message }.not_to change(Message, :count)
+    end
+  end
 end
 
