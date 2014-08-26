@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
   def create
     @service = MessageService::CreateMessageService.new(params[:message], current_user.id)
     if @service.create_message
-      UserMailer.message_notification(@user).deliver
+      UserMailer.message_notification(current_user).deliver
       flash[:success] = "Message sent!"
     else
       flash[:error] = @service.get_errors
