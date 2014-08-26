@@ -11,5 +11,11 @@ class UserMailer < ActionMailer::Base
     @url = users_url
     mail(to: @user.email, subject: "You gained a new follower")
   end
+  
+  def message_notification (user)
+    @user = user
+    @url = notifications_url
+    mail(to: @user.email, subject: "You received a message")
+  end
 
 end
