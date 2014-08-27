@@ -10,7 +10,7 @@
               <li><%= link_to "Users", users_path %></li>
               <li><%= link_to "Inbox", message_path(current_user) %></li>
               <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Notifications", notifications_user_path(:id => current_user) %></li>
+              <li><%= link_to "Notifications(#{current_user.messages.count})", notifications_user_path(:id => current_user) %></li>
               <li><%= link_to "Settings", edit_user_path(current_user) %></li>
               <li class="divider"></li>
               <li>
