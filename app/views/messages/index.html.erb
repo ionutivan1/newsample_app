@@ -15,6 +15,11 @@
     </section>
   </aside>
   <div class="span8">
-    <%= render @message %>
+    <% if current_user.messages.any? %>
+        <h3>Messages (<%= current_user.messages.count %>)</h3>
+        <ol class="users">
+          <%= render @messages %>
+        </ol>
+    <% end %>
   </div>
 </div>

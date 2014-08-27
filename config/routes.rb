@@ -10,7 +10,7 @@ SampleApp::Application.routes.draw do
   end
     resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy]
-  resources :messages,    only: [ :new, :show, :create, :destroy]
+  resources :messages,    only: [ :index, :new, :show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
   # resources :notifications
   root  'static_pages#home'
