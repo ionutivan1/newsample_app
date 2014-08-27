@@ -11,8 +11,6 @@ class MessagesController < ApplicationController
 
   def show
     @message = Message.find(params[:id])
-    # @microposts = @user.microposts.paginate(page: params[:page])
-    # @messages = current_user.messages.paginate(page: params[:page])
   end
 
   def create
