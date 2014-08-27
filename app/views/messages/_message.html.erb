@@ -1,5 +1,5 @@
-<li>
-  <span class="content"><%= message.content %></span>
+
+  <span class="content"><%= link_to truncate(message.content, length: 5), message %></span>
   <span class="timestamp">
     Received: <%= time_ago_in_words(message.created_at) %> ago.
   </span>
@@ -8,4 +8,4 @@
                   data: { confirm: "You sure?" },
                   title: message.content %>
   <% end %>
-</li>
+

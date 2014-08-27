@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :signed_in_user, only: [:new, :create, :destroy]
 
   def index
-
+    @messages = current_user.messages.paginate(page: params[:page])
   end
 
   def new
@@ -10,7 +10,9 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @messages = current_user.messages.paginate(page: params[:page])
+    @message = Message.find(params[:id])
+    # @microposts = @user.microposts.paginate(page: params[:page])
+    # @messages = current_user.messages.paginate(page: params[:page])
   end
 
   def create
