@@ -74,6 +74,10 @@ class UsersController < ApplicationController
     followers_or_following(params[:id], params[:page])
   end
 
+  def notifications
+   render 'notifications'
+  end
+
   private
 
   def user_params

@@ -4,6 +4,7 @@ SampleApp::Application.routes.draw do
     member do
       get :following, :followers
       get :set_complete
+      get :notifications
     end
 
   end
@@ -11,7 +12,7 @@ SampleApp::Application.routes.draw do
   resources :microposts,    only: [:create, :destroy]
   resources :messages,    only: [ :new, :show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  resources :notifications
+  # resources :notifications
   root  'static_pages#home'
 
   match '/signup',  to: 'users#new',            via: 'get'
