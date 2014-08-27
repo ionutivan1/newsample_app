@@ -26,6 +26,7 @@ module MessageService
 
       if @message.valid?
         @message.save
+        UserMailer.message_notification(get_user).deliver
       end
     end
 

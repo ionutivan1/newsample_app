@@ -3,13 +3,14 @@ SampleApp::Application.routes.draw do
   resources :users do
     member do
       get :following, :followers
+      get :notifications
     end
   end
     resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy]
   resources :messages,    only: [ :new, :show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  resources :notifications
+  # resources :notifications
   root  'static_pages#home'
 
   match '/signup',  to: 'users#new',            via: 'get'

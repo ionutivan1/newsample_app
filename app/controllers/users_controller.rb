@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-before_action :signed_in_user,
+  before_action :signed_in_user,
                 only: [:index, :edit, :update, :destroy, :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
 
   def index
     @users = User.paginate(page: params[:page])
@@ -56,6 +56,10 @@ before_action :signed_in_user,
   def followers
     @title = "Followers"
     followers_or_following(params[:id], params[:page])
+  end
+
+  def notifications
+   render 'notifications'
   end
 
   private
