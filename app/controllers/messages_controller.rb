@@ -11,6 +11,7 @@ class MessagesController < ApplicationController
 
   def show
     @message = Message.find(params[:id])
+    MessageService::SeenService.new(@message)
   end
 
   def create
@@ -20,13 +21,13 @@ class MessagesController < ApplicationController
     else
       flash[:error] = @service.get_errors
     end
-    redirect_to message_url(current_user)
+    redirect_to messages_url(current_user)
   end
 
   def destroy
     @message = Message.find(params[:id])
     @message.destroy
-    redirect_to message_url(current_user)
+    redirect_to messages_url(current_user)
   end
 
   private
