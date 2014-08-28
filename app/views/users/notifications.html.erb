@@ -2,6 +2,9 @@
 <h1>Notifications</h1>
 <ul>
   <% current_user.messages.each do |msg| %>
-      <li>You have a new message from <%= User.find(msg.user_id).name %>: <%= link_to "See message", message_path(:id => current_user.id) %></li>
+      <% unless msg.seen %>
+          <li>You have a new message from <%= User.find(msg.user_id).name %>
+            : <%= link_to "See message", messages_path(:id => current_user.id) %></li>
+      <% end %>
   <% end %>
 </ul>

@@ -1,0 +1,7 @@
+<%counter = 0 %>
+<% current_user.messages.each do |msg| %>
+<% unless msg.seen %>
+        <% counter +=1 %>
+    <% end %>
+<% end %>
+<%= counter %>

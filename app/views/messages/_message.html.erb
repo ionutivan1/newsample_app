@@ -1,11 +1,16 @@
-
-  <span class="content"><%= link_to truncate(message.content, length: 5), message %></span>
-  <span class="timestamp">
-    Received: <%= time_ago_in_words(message.created_at) %> ago.
-  </span>
-  <% if current_user?(message.user) %>
-      <%= link_to "delete", message, method: :delete,
-                  data: { confirm: "You sure?" },
-                  title: message.content %>
+<span class="content">
+    <% if message.seen %>
+  Seen
+      <% else %>
+  Not Seen
   <% end %>
+  <%= link_to truncate(message.content, length: 10), message %></span>
+<span class="timestamp">
+  Received: <%= time_ago_in_words(message.created_at) %> ago.
+  </span>
+<% if current_user?(message.user) %>
+    <%= link_to "delete", message, method: :delete,
+                data: {confirm: "You sure?"},
+                title: message.content %>
+<% end %>
 
