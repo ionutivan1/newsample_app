@@ -23,5 +23,16 @@ describe MessageService do
       expect { service.create_message }.not_to change(Message, :count)
     end
   end
+
+  describe "seen messages" do
+
+
+    it "clicked on the message" do
+      message = Message.new(id: 1, sender_id: 1, content: "veryspecifictestcontent", user_id: 1, seen: false)
+      MessageService::SeenService.new(message)
+      expect { message.seen }.to be_true
+    end
+  end
 end
+
 
