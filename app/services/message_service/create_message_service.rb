@@ -19,7 +19,7 @@ module MessageService
     private
 
     def build_message
-      @message = Message.new(sender_id: @receiver_id, content: @content, user_id: get_user)
+      @message = Message.new(sender_id: @receiver_id, content: @content, user_id: get_user, seen: false)
     end
 
     def save
