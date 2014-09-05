@@ -1,0 +1,30 @@
+<% provide(:title, "Inbox") %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for current_user %>
+        <%= current_user.name %>
+      </h1>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+    <section>
+      <%= render 'messages/message_form' %>
+    </section>
+  </aside>
+  <div class="span8">
+    <% if current_user.messages.any? %>
+        <h3>Messages (<%= current_user.messages.count %>)</h3>
+        <ol class="users">
+          <%= render @messages %>
+        </ol>
+    <% else %>
+        Wow.
+    <% end %>
+    <h4>
+      <%= link_to "Go back", request.referer %>
+    </h4>
+  </div>
+</div>

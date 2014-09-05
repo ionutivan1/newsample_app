@@ -12,5 +12,12 @@
     <%= link_to "delete", message, method: :delete,
                 data: {confirm: "You sure?"},
                 title: message.content %>
+    <div id="trigger_like">
+      <% if message.liked? %>
+          <%= render partial: 'messages/unlike', locals: {message: message} %>
+      <% else %>
+          <%= render partial: 'messages/like', locals: {message: message} %>
+      <% end %>
+    </div>
 <% end %>
 

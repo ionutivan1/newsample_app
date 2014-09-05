@@ -20,6 +20,13 @@
         <ol class="users">
           <%= render @messages %>
         </ol>
+    <% else %>
+        You have no messages. Or friends.
     <% end %>
+    <br>
+
+    <h4>
+      <%= link_to "Go to sent messages", sent_messages_path %>
+    </h4>
   </div>
 </div>

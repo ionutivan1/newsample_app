@@ -30,6 +30,10 @@ class MessagesController < ApplicationController
     redirect_to messages_url(current_user)
   end
 
+  def sent_messages
+    @messages = Message.where(sender_id: current_user.id)
+  end
+
   private
 
   def message_params

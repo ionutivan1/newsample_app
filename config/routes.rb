@@ -1,4 +1,5 @@
 SampleApp::Application.routes.draw do
+  get "likes/index"
   default_url_options  :host => 'localhost:3000'
   resources :users do
     member do
@@ -10,7 +11,7 @@ SampleApp::Application.routes.draw do
   resources :microposts,    only: [:create, :destroy]
   resources :messages,    only: [ :index, :new, :show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  # resources :notifications
+  resources :like, only: [:create, :update]
   root  'static_pages#home'
 
   match '/signup',  to: 'users#new',            via: 'get'
@@ -19,6 +20,7 @@ SampleApp::Application.routes.draw do
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
+  match '/sent_messages', to: 'messages#sent_messages', via:'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

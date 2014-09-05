@@ -5,6 +5,7 @@ class CreateMessages < ActiveRecord::Migration
       t.integer :sender_id
       t.string :content
       t.boolean :seen
+      t.boolean :liked
 
       t.timestamps
     end
