@@ -14,5 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-.idea
+.idea/
 .gitignore~
+redis-2.8.13/
+
