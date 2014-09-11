@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @service = MessageService::CreateMessageService.new(params[:message], current_user.id)
+    @service = MessageService::CreateMessageService.new(message_params, current_user.id)
     if @service.create_message
       flash[:success] = "Message sent!"
     else
@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:user_id, :content, :sender_id)
+    params.require(:message).permit(:user_id, :content, :sender_id, :mes_attach)
   end
 
 end
