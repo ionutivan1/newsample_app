@@ -12,5 +12,6 @@
     <%= link_to "delete", message, method: :delete,
                 data: {confirm: "You sure?"},
                 title: message.content %>
+    <%= link_to "Download", message.mes_attach.url(:original,false) %>
 <% end %>
 
