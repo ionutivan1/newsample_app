@@ -15,6 +15,7 @@
 /log/*.log
 /tmp
 .idea/*
+public/upload
 .gitignore~
 redis-2.8.13/
 
