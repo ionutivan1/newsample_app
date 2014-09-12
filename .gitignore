@@ -15,6 +15,8 @@
 /log/*.log
 /tmp
 .idea/*
+.idea/newsample_app.iml
+.idea/workspace.xml
 public/upload
 .gitignore~
 redis-2.8.13/
