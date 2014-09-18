@@ -10,7 +10,7 @@
                     title: micropost.content %>
 
     <% end %>
-    <div class="like_form_class" id="<%= micropost.id %>">
+    <div id="<%= micropost.id %>">
       <%= render partial: 'microposts/like_form', :locals => {:micropost => micropost} %>
     </div>
   </li>

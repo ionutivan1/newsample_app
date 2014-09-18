@@ -1,1 +1,1 @@
-$("#like_form").html("<%= escape_javascript(render :partial =>'microposts/unlike', :locals => {:micropost => @micropost}) %>")
+$("#<%= @micropost.id %>").html("<%= escape_javascript(render :partial =>'microposts/unlike', :locals => {:micropost => @micropost}) %>")

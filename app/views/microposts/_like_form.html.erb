@@ -1,4 +1,4 @@
-<% if micropost.liking?(current_user) %>
+<% if micropost.liking? %>
     <%= render partial: 'microposts/unlike', :locals => {:micropost => micropost} %>
 <% else %>
     <%= render partial: 'microposts/like', :locals => {:micropost => micropost} %>

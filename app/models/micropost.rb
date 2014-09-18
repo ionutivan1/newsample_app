@@ -18,15 +18,15 @@ class Micropost < ActiveRecord::Base
           user_id: user.id)
   end
 
-  def liking?(user)
-    likes.find_by(liker_id: user.id)
+  def liking?
+    likes.find_by(micropost_id: self.id)
   end
 
-  def like(micropost, user)
-    likes.create(liker_id: user.id, micropost_id: micropost.id)
+  def like(user_id)
+    likes.create(liker_id: user_id, micropost_id: self.id)
   end
 
-  def unlike(micropost,user)
-    likes.find_by(liker_id: user.id,micropost_id: micropost.id).destroy
+  def unlike(user_id)
+    likes.find_by(liker_id: user_id,micropost_id: self.id).destroy
   end
 end

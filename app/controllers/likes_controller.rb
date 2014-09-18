@@ -1,20 +1,20 @@
 class LikesController < ApplicationController
-
+before_action :find_micropost
+respond_to :html, :js
   def create
-    @micropost = Micropost.find(params[:like][:micropost_id])
-    @micropost.like(@micropost,User.find(params[:like][:liker_id]))
-    respond_to do |format|
-      format.html { redirect_to current_user }
-      format.js
-    end
+    @micropost.like(current_user.id)
+    respond_with user_path(id: current_user.id)
   end
 
   def destroy
-    @micropost = Micropost.find(params[:like][:micropost_id])
-    @micropost.unlike(@micropost,User.find(params[:like][:liker_id]))
-    respond_to do |format|
-      format.html { redirect_to current_user }
-      format.js
-    end
+    @micropost.unlike(current_user.id)
+    respond_with user_path(id: current_user.id)
   end
+
+  private
+
+  def find_micropost
+  @micropost = Micropost.find(params[:like][:micropost_id])
+  end
+
 end
