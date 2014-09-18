@@ -3,5 +3,7 @@
              remote: true) do |f| %>
     <%= f.hidden_field :micropost_id, :value => micropost.id %>
     <%= f.hidden_field :liker_id, :value => current_user.id %>
-    <%= f.submit "Unlike", class: "btn btn-small" %>
+
+    <%= f.submit "Unlike",id: micropost.id, onclick: "refresh_div(#{micropost.id},#{current_user.id})", class: "btn btn-small" %>
+
 <% end %>
