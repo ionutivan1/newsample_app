@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :signed_in_user, only: [:new, :create, :destroy]
-
+  before_action :find_message, only: [:show,:destroy]
   def index
     @messages = current_user.messages.paginate(page: params[:page])
   end
@@ -10,7 +10,6 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.find(params[:id])
     MessageService::SeenService.new(@message)
   end
 
@@ -25,12 +24,16 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = Message.find(params[:id])
+
     @message.destroy
     redirect_to messages_url(current_user)
   end
 
   private
+
+  def find_message
+    @message = Message.find(params[:id])
+  end
 
   def message_params
     params.require(:message).permit(:user_id, :content, :sender_id)
