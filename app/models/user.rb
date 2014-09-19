@@ -1,4 +1,18 @@
 class User < ActiveRecord::Base
+
+  state_machine :initial => :inactive do
+    state :inactive, value: false
+    state :active, value: true
+
+    event :activate do
+    transition :inactive => :active
+    end
+
+    event :inactivate do
+      transition :active => :inactive
+    end
+  end
+
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
@@ -20,16 +34,21 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
+  def sign_up_token
+    return User.new_remember_token
+  end
+
   def User.digest(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
 
    def feed
     Micropost.from_users_followed_by(self)
-  end
+   end
+
     def following?(other_user)
     relationships.find_by(followed_id: other_user.id)
-  end
+    end
 
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)
