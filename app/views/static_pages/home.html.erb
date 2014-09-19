@@ -17,6 +17,7 @@
     <div class="span8">
       <h3>Micropost Feed</h3>
       <%= render 'users/search_form' %>
+      <%= link_to "RSS Feed", microposts_url(:rss)%>
       <%= render 'shared/feed' %>
     </div>
     </div>
