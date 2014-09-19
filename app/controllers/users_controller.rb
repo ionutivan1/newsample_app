@@ -3,7 +3,7 @@ class UsersController < ApplicationController
                 only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-  before_action :find_user, only: [:update, :set_complete, :destroy, :following, :followers]
+  before_action :find_user, only: [ :show, :update, :set_complete, :destroy, :following, :followers]
 
   def index
     @search_query = UserSearchService.new(params[:search])
