@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
   before_action :find_user, only: [:update, :set_complete, :destroy, :following, :followers]
 
-before_action :find_user
   def index
     @search_query = UserSearchService.new(params[:search])
     @users = @search_query.find_users.paginate(page: params[:page])

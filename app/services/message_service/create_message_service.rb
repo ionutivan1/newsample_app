@@ -5,11 +5,12 @@ module MessageService
       @user_id = params[:user_id]
       @content = params[:content]
       @receiver_id = receiver_id
+      @params = params
     end
 
     def create_message
-      build_message
-      save
+      save_message
+      set_additional_params
     end
 
     def get_errors
@@ -18,12 +19,15 @@ module MessageService
 
     private
 
-    def build_message
-      @message = Message.new(sender_id: @receiver_id, content: @content, user_id: get_user, seen: false)
+    def save_message
+      @message = Message.create(@params)
+
     end
 
-    def save
-
+    def set_additional_params
+      @message.user_id = get_user
+      @message.sender_id = @receiver_id
+      @message.seen = false
       if @message.valid?
         @message.save
         UserMailer.message_notification(get_user).deliver
