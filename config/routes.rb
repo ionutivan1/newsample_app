@@ -1,14 +1,23 @@
 SampleApp::Application.routes.draw do
-  default_url_options  :host => 'localhost:3000'
+default_url_options :host => "localhost:3000"
+
+  namespace :api, :defaults => { :format => 'json' } do
+    namespace :v1 do
+    resources :users
+      end
+  end
+
   resources :users do
     member do
       get :following, :followers
+      get :set_complete
       get :notifications
+      get 'set_complete/:confirmation' => :set_complete
     end
   end
     resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy]
   resources :messages,    only: [ :index, :new, :show, :create, :destroy]
+  resources :microposts,    only: [:create, :destroy, :index]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   root  'static_pages#home'

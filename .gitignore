@@ -20,4 +20,7 @@
 public/upload
 .gitignore~
 redis-2.8.13/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/runConfigurations/
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Welcome, <%= @user.name %></h1>
+<p>
+ Follow this link to confirm your account: <br>
+  <h3> <%= link_to "Sign In", set_complete_user_url(:id => @user.id, :confirmation => @user.confirmation) %></h3>
+</p>
+<p>Thanks for joining and have a great day!</p>
+</body>
+</html>
