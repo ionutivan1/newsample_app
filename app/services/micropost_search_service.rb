@@ -11,7 +11,6 @@ class MicropostSearchService
   private
   def get_microposts
     @microposts = Micropost.all.where("content like ?", "%#{@search}%")
-    return @microposts
   end
 
 end
