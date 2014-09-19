@@ -42,7 +42,7 @@ before_action :find_user
         # @user.activate!
         redirect_to signin_path
         flash[:success] = "Account confirmed"
-
+      end
       respond_to do |format|
         UserMailer.welcome_mail(@user).deliver
         sign_in @user
