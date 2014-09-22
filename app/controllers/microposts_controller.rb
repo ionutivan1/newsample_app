@@ -1,11 +1,12 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user, only: [:create, :destroy]
   before_action :correct_user, only: :destroy
-  before_action :find_microposts,   only: :destroy
+  before_action :find_microposts, only: :destroy
 
 
   def index
-     @microposts = Micropost.all
+    @search_query = MicropostSearchService.new(params[:search])
+    @results = @search_query.find.paginate(page: params[:page])
   end
 
   def create
