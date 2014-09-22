@@ -1,10 +1,10 @@
 module MessageService
   class CreateMessageService
 
-    def initialize(params, receiver_id)
+    def initialize(params, sender_id)
       @user_id = params[:user_id]
       @content = params[:content]
-      @receiver_id = receiver_id
+      @sender_id = sender_id
       @params = params
     end
 
@@ -26,7 +26,7 @@ module MessageService
 
     def set_additional_params
       @message.user_id = get_user
-      @message.sender_id = @receiver_id
+      @message.sender_id = @sender_id
       @message.seen = false
       if @message.valid?
         @message.save
