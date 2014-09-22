@@ -1,5 +1,5 @@
 <%= form_for micropost.likes.build(micropost_id: micropost.id, liker_id: current_user.id),
              remote: true do |f| %>
       <%= f.hidden_field :micropost_id, :value => micropost.id %>
-      <%= f.submit "Like", id: micropost.id, onclick: "refresh_div(#{micropost.id},#{current_user.id})", class: "btn btn-small btn-primary" %>
+      <%= f.submit "Like", id: micropost.id, onclick: "refresh_div(#{micropost.id})", class: "btn btn-small btn-primary" %>
 <% end %>
