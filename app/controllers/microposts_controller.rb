@@ -6,7 +6,7 @@ class MicropostsController < ApplicationController
 
   def index
     @search_query = MicropostSearchService.new(params[:search])
-    @results = @search_query.find.paginate(page: params[:page])
+    @microposts = @search_query.find.paginate(page: params[:page])
   end
 
   def create
