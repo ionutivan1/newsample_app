@@ -37,25 +37,6 @@ class UsersController < ApplicationController
   def set_complete
     if @user.can_activate?
       if @user.confirmation == params[:confirmation]
-        @user.update_attribute(:state, true)
-        # @user.activate!
-        redirect_to signin_path
-        flash[:success] = "Account confirmed"
-      end
-      respond_to do |format|
-        UserMailer.welcome_mail(@user).deliver
-        sign_in @user
-        format.html { redirect_to @user }
-        flash[:success] = "Welcome to the Sample App!"
-      end
-    else
-      render 'new'
-    end
-  end
-
-  def set_complete
-    if @user.can_activate?
-      if @user.confirmation == params[:confirmation]
       @user.update_attribute(:state, true)
       # @user.activate
       redirect_to signin_path

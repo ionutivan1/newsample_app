@@ -7,11 +7,10 @@
         <%= render 'shared/error_messages', object: f.object %>
 
         <%= render 'fields', f: f %>
-
         <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
+
+    <%= link_to "Change", image_path(:id => current_user.id) %>
   </div>
 </div>
