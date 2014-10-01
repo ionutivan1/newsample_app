@@ -21,7 +21,7 @@ SampleApp::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :password_resets
-  resources :images, only: [:index, :new, :show, :update, :destroy]
+  resources :images, only: [:index, :new, :create, :show, :update, :destroy]
   # resources :images do
   #   get 'update/:type/:type_id' => :update
   #   get 'add/:type' => :new

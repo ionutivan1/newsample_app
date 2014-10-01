@@ -9,6 +9,11 @@ class ImagesController < ApplicationController
   def new
   end
 
+  def create
+    @image = Image.new(image_params)
+    @image.save
+  end
+
   def update
     @a = @image_update.updateImage
     render 'show'

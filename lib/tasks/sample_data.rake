@@ -1,9 +1,14 @@
 namespace :db do
+
+  include ActionDispatch::TestProcess
+
   desc "Fill database with sample data"
   task populate: :environment do
     make_users
     make_microposts
     make_relationships
+    make_messages
+    add_profile_pictures
   end
 end
 
@@ -27,6 +32,13 @@ def make_users
   end
 end
 
+def add_profile_pictures
+
+  users = User.all
+  image =  fixture_file_upload('public/upload/pix/blue.gif', 'image/gif')
+  users.each { |user| Image.create!(element: "user", element_id: user.id, image: image) }
+end
+
 def make_microposts
   users = User.all(limit: 6)
   50.times do
@@ -37,11 +49,9 @@ end
 
 def make_messages
   users = User.all(limit: 6)
-  user  = users.first
-  50.times do
-    user_id = users[3..40]
-    content = "d " + Faker::Lorem.sentence(5)
-    user.each { |user| user.messages.create(content: content) }
+  10.times do
+    content = Faker::Lorem.sentence(5)
+    users.each { |user| user.messages.create!( user_id: user.id, sender_id: user.id, content: content, seen: false) }
   end
 end
 
