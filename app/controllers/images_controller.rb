@@ -10,17 +10,17 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(image_params)
-    @image.save
+    @profile_pic = Image.new(image_params)
+    @profile_pic.save
   end
 
   def update
-    @a = @image_update.updateImage
+    @profile_pic = @image_update.updateImage
     render 'show'
   end
 
   def show
-
+    @profile_pic = Image.find_by(element: "user", element_id: current_user.id)
   end
 
   def destroy

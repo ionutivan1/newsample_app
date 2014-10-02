@@ -1,5 +1,4 @@
-   <%= gravatar_for current_user %>
+   <%= image_tag @profile_pic.image.url(:original, false) %>
    <BR><BR><BR>
-   <%#=image_tag @user.image.url %>
    <%= current_user.id %>
  <%= render 'edit' %>
