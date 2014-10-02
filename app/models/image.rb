@@ -11,7 +11,4 @@ class Image < ActiveRecord::Base
   def self.profile_picture(user)
     find_by(element: "user", element_id: user.id)
   end
-  def self.default_picture
-
-  end
 end
