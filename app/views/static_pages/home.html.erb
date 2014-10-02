@@ -5,21 +5,18 @@
           <%= render 'shared/user_info' %>
         </section>
         <section>
-          <%= render 'shared/micropost_form' %>
-        </section>
-        <section>
-          <%= render 'shared/user_info' %>
-        </section>
-        <section>
           <%= render 'shared/stats' %>
         </section>
+        <section>
+          <%= render 'shared/micropost_form' %>
+        </section>
       </aside>
-    <div class="span8">
-      <h3>Micropost Feed</h3>
-      <%= render 'users/search_form' %>
-      <%= link_to "RSS Feed", microposts_url(:rss)%>
-      <%= render 'shared/feed' %>
-    </div>
+      <div class="span8">
+        <h3>Micropost Feed</h3>
+        <%= render 'users/search_form' %>
+        <%= link_to "RSS Feed", microposts_url(:rss) %>
+        <%= render 'shared/feed' %>
+      </div>
     </div>
 <% else %>
     <div class="center hero-unit">
