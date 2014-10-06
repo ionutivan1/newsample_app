@@ -2,14 +2,11 @@ module ImagesHelper
 
   def gravatar_for(user)
     profile_pic = Image.profile_picture(user)
-
-    if profile_pic.image.url(:original, false)
-      gravatar_url = profile_pic.image.url(:original, false)
+    if File.file?(profile_pic.image.path)
+      image_tag(profile_pic.image.url(:thumb), alt: user.name, class: "gravatar")
     else
-      gravatar_url = profile_pic.image.url(:default_url, false)
+      image_tag("default.jpg",size:"50x50", alt: profile_pic.image.path, class: "gravatar")
     end
-
-    image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
 end
