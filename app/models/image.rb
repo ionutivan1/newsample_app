@@ -2,14 +2,14 @@ class Image < ActiveRecord::Base
   validates :element, presence: true
   validates :element_id, presence: true
   has_attached_file :image,
-    :url => "/upload/:element/:id/:basename.:extension",
+    :url => "/upload/:element/:id/:style/:basename.:extension",
     :styles => {
     :thumb => "50x50",
     :small => "150x150",
     :medium => "200x200",
     },
-    :path => ":rails_root/public/upload/:element/:id/:basename.:extension",
-    :default_url => ":rails_root/public/upload/profile/default.jpg"
+    :path => ":rails_root/public/upload/:element/:id/:style/:basename.:extension",
+    :default_url => ":rails_root/public/upload/pix/blue.gif"
   validates_attachment_content_type :image, :content_type => /\Aimage/
   validates_attachment_file_name :image, :matches => [/gif\Z/, /jpe?g\Z/]
 
