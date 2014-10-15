@@ -1,6 +1,5 @@
 module MessageService
   class CreateMessageService
-
     def initialize(params, sender_id)
       @user_id = params[:user_id]
       @content = params[:content]
@@ -30,6 +29,8 @@ module MessageService
       @message.seen = false
       if @message.valid?
         @message.save
+        data = {'message' => 'You received a new message!'}
+        Pusher['my_notifications'].trigger('notification', data)
         UserMailer.message_notification(get_user).deliver
       end
     end

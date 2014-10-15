@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.gritter
+//= require PusherNotifier
+//= require pusher_min
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
