@@ -9,6 +9,7 @@ class Micropost < ActiveRecord::Base
   has_many :reverse_relationships, foreign_key: "liker_id",
            class_name: "Like",
            dependent: :destroy
+  has_many :image, through: :micropost_image
 
   # Returns microposts from the users being followed by the given user.
   def self.from_users_followed_by(user)
