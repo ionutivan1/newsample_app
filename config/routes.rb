@@ -1,10 +1,10 @@
 SampleApp::Application.routes.draw do
-default_url_options :host => "localhost:3000"
+  default_url_options :host => "localhost:3000"
 
-  namespace :api, :defaults => { :format => 'json' } do
+  namespace :api, :defaults => {:format => 'json'} do
     namespace :v1 do
-    resources :users
-      end
+      resources :users
+    end
   end
 
   resources :users do
@@ -15,20 +15,21 @@ default_url_options :host => "localhost:3000"
       get 'set_complete/:confirmation' => :set_complete
     end
   end
-    resources :sessions,      only: [:new, :create, :destroy]
-  resources :messages,    only: [ :index, :new, :show, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy, :index]
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :messages, only: [:index, :new, :show, :create, :destroy]
+  resources :microposts, only: [:create, :destroy, :index]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :password_resets
+  resources :images, only: [:index, :new, :create, :show, :update, :destroy]
 
-  root  'static_pages#home'
+  root 'static_pages#home'
 
-  match '/signup',  to: 'users#new',            via: 'get'
-  match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/signout', to: 'sessions#destroy',     via: 'delete'
-  match '/help',    to: 'static_pages#help',    via: 'get'
-  match '/about',   to: 'static_pages#about',   via: 'get'
+  match '/signup', to: 'users#new', via: 'get'
+  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
+  match '/help', to: 'static_pages#help', via: 'get'
+  match '/about', to: 'static_pages#about', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
